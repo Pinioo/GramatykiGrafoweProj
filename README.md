@@ -1,5 +1,5 @@
-Graph manipulation & storing:
+## Graph manipulation & storing:
 networkx
 
-Graph visualization:
+## Graph visualization:
 plotly
