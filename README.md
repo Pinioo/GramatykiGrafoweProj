@@ -9,4 +9,4 @@ plotly
 |-----|-----|
 |1|P1, P2|
 |2|P13, P14|
-|3|P3, P10|
+|3|P3, P10| Ksyta, Kordylewski
