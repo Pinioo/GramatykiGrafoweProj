@@ -5,7 +5,7 @@ networkx
 plotly
 
 ## Groups with corresponding productions:
-|Group|Productions|S|
+|Group|Productions|Squad|
 |-----|-----|-----|
 |1|P1, P2|[Pinioo](https://github.com/Pinioo), [varsill](https://github.com/varsill)|
 |2|P13, P14||
