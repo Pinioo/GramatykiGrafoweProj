@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 LABEL = "label"
 NODE_GENERATOR = it.count()
+LEVEL_OFFSET = 2
 
 def next_nodes(count=1):
     """Global generator for node numbers to provide uniqueness"""
@@ -19,7 +20,7 @@ def attr(label, x=0, y=0, level=0):
     """Generator of standard set of attributes fo grammar"""
     return {
         LABEL: label,
-        "x": x, "y": y-level*2,
+        "x": x, "y": y-level*LEVEL_OFFSET,
         "level": level,
     }
 
