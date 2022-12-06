@@ -9,7 +9,6 @@ from networkx import Graph
 
 E1, E2, E3, E4, I = next_nodes(5)
 def test_production_left_side():
-    sm, gt = 0, 1
     left = Graph()
     left.add_nodes_from([
         (E1, attr("E")),
