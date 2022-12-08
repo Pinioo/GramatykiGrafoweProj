@@ -1,7 +1,7 @@
-from lib import Production, attr, LABEL, next_nodes, visualize_graph
+from lib import Production, attr, LABEL, next_nodes
 from networkx import Graph
-EL1, EL2, EL3, EL4, IL = next_nodes(5)
 
+EL1, EL2, EL3, EL4, IL = next_nodes(5)
 
 # HELPERS
 def __add_subgraph_edges(graph, e1, e2, e3, e4, i):
@@ -42,7 +42,6 @@ def production_left_side():
 def production_modification(graph: Graph, mapping: dict) -> Graph:
   E1, E2, E3, E4, E5, E6, E7, E8, E9 = next_nodes(9)
   I1, I2, I3, I4 = next_nodes(4)
-  visualize_graph(graph)
   # calculate the level of the nodes
   level = graph.nodes[mapping[EL1]]["level"]+1
   # change the left side node label
