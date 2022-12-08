@@ -6,8 +6,8 @@ from networkx import Graph
 
 if __name__ == "__main__":
     g1 = Graph()
-    EL = next_nodes(1)
-    g1.add_nodes_from([(EL, attr("el", 0, 0, 0))])
+    EL, = next_nodes(1)
+    g1.add_nodes_from([(EL, attr("El", 0, 0, 0))])
     g2 = P1.perform_modification(g1, level=0)
     g3 = P2.perform_modification(g2, level=1)
     g4 = P2.perform_modification(g3, level=2)
