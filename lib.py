@@ -20,13 +20,13 @@ def attr(label, x=0, y=0, level=0):
     """Generator of standard set of attributes fo grammar"""
     return {
         LABEL: label,
-        "x": x, "y": y-level*LEVEL_OFFSET,
+        "x": x, "y": y,
         "level": level,
     }
 
 
 def visualize_graph(g: Graph) -> None:
-    pos = {n: (a["x"], a["y"]) for n, a in g.nodes.items()}
+    pos = {n: (a["x"], a["y"]-LEVEL_OFFSET*a["level"]) for n, a in g.nodes.items()}
     labels = {n: a[LABEL] for n, a in g.nodes.items()}
     nx.draw(g, pos)
     nx.draw_networkx_labels(g, pos, labels, font_color='w')
