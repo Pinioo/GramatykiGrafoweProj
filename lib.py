@@ -9,24 +9,31 @@ import matplotlib.pyplot as plt
 
 LABEL = "label"
 NODE_GENERATOR = it.count()
+LEVEL_OFFSET = 1.5
 
 def next_nodes(count=1):
     """Global generator for node numbers to provide uniqueness"""
     return tuple(next(NODE_GENERATOR) for _ in range(count))
 
-def attr(label, x = None, y = None, level = None):
+
+def attr(label, x=0, y=0, level=0):
     """Generator of standard set of attributes fo grammar"""
     return {
-        LABEL: label, 
+        LABEL: label,
         "x": x, "y": y,
         "level": level,
     }
 
-def visualize_graph(g: Graph) -> None:
-    pos = {n: (a["x"], a["y"]) for n, a in g.nodes.items()}
+
+def visualize_graph(g: Graph, level: int = None) -> None:
+    if level != None:
+        this_level_nodes = [node for node, attr in g.nodes.items() if attr["level"]==level]
+        g = g.subgraph(this_level_nodes)
+    pos = {n: (a["x"]+LEVEL_OFFSET*a["level"], a["y"]) for n, a in g.nodes.items()}
     labels = {n: a[LABEL] for n, a in g.nodes.items()}
-    nx.draw(g, pos)
-    nx.draw_networkx_labels(g, pos, labels, font_color='w')
+    nx.draw(g, pos, node_size=100, node_color="y")
+    nx.draw_networkx_labels(g, pos, labels, font_color='k', font_size=8)
+    plt.axis('scaled')
     plt.show()
 
 
@@ -47,20 +54,25 @@ class Production:
     modification: Callable[[Graph, dict], None]
 
     # Return graph after
-    def perform_modification(self, graph: Graph, in_place: bool = False) -> Graph:
+    def perform_modification(self, graph: Graph, in_place: bool = False, level: int = None) -> Graph:
         """Performs production on provided graph. Either creates a copy or changes provided graph."""
 
-        mapping = self.is_applicable(graph)
+        if level != None:
+            this_level_nodes = [node for node, attr in graph.nodes.items() if attr["level"]==level]
+            graph_to_search = graph.subgraph(this_level_nodes)
+        else:
+            graph_to_search = graph
+        mapping = self.get_mapping_if_applicable(graph_to_search)
         if mapping is None:
-            raise Exception()
+            raise Exception("No isomorphic subgraph has been found")
         if not in_place:
             graph = graph.copy()
         self.modification(graph, mapping)
         return graph
-        
-    def is_applicable(self, graph: Graph) -> dict | None:
+
+    def get_mapping_if_applicable(self, graph: Graph):
         """Returns a mapping {left_side_node, input_graph_node} for isomorphism if found."""
 
-        gm = iso.GraphMatcher(graph, self.left_side, node_match=lambda u, v: u[LABEL] == v[LABEL])
-        return {v: k for k, v in gm.mapping.items()} if gm.subgraph_is_isomorphic() else None
-
+        graph_matcher = iso.GraphMatcher(graph, self.left_side,
+                              node_match=lambda u, v: u[LABEL] == v[LABEL])
+        return {v: k for k, v in graph_matcher.mapping.items()} if graph_matcher.subgraph_is_isomorphic() else None
