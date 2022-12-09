@@ -55,4 +55,4 @@ def production_modification(graph: Graph, mapping: dict) -> Graph:
   # Connect I5 to nodes at same posisions as deleted nodes
   graph.add_edges_from([(I5, E1), (I5, E3)])
 
-P2 = Production(production_left_side(), production_modification)
+P13 = Production(production_left_side(), production_modification)
