@@ -73,6 +73,7 @@ class Production:
     def get_mapping_if_applicable(self, graph: Graph):
         """Returns a mapping {left_side_node, input_graph_node} for isomorphism if found."""
 
+        # TODO: Add a way to find same position nodes
         graph_matcher = iso.GraphMatcher(graph, self.left_side,
                               node_match=lambda u, v: u[LABEL] == v[LABEL])
         return {v: k for k, v in graph_matcher.mapping.items()} if graph_matcher.subgraph_is_isomorphic() else None
