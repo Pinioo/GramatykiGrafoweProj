@@ -1,7 +1,7 @@
 from lib import Production, attr, next_nodes
 from networkx import Graph
 
-E0, E1, E2, E3, E4, E5, I1, I2, I3, I4, I5, I6 = next_nodes(11)
+E0, E1, E2, E3, E4, E5, I1, I2, I3, I4, I5, I6 = next_nodes(12)
 
 #### PRODUCTION DEFINITION
 
