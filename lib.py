@@ -52,6 +52,7 @@ class Production:
 
     left_side: Graph
     modification: Callable[[Graph, dict], None]
+    left_side_pos_constraints: Callable[[Graph], bool]
 
     # Return graph after
     def perform_modification(self, graph: Graph, in_place: bool = False, level: int = None) -> Graph:
