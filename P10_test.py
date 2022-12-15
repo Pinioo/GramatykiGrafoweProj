@@ -28,5 +28,5 @@ if __name__ == "__main__":
     print(len(graph.nodes))
     visualize_graph(graph)
     g10 = P10.perform_modification(graph, level=0)
-    print(len(graph.nodes))
+    print(len(g10.nodes))
     visualize_graph(g10)
