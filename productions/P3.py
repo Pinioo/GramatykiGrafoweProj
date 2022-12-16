@@ -50,8 +50,6 @@ def production_modification(graph: Graph, mapping: dict) -> Graph:
   x2, y2 = __get_node_pos(graph, mapping[EL2])
   x3, y3 = __get_node_pos(graph, mapping[EL3])
   x4, y4 = __get_node_pos(graph, mapping[EL4])
-  
-  print(x3, y3)
 
   # prepare edges' splitting positions
   e1_mid_x, e1_mid_y = (x1+x3)/2, (y1+y3)/2
