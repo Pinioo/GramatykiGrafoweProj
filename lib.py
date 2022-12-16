@@ -26,8 +26,7 @@ def attr(label, x=0, y=0, level=0):
         "level": level,
     }
 
-# TODO
-# przesunac nachodzace na siebie wierzcholki
+
 def visualize_graph(g: Graph, level: int = None) -> None:
     if level != None:
         this_level_nodes = [node for node, attr in g.nodes.items() if attr["level"]==level]
@@ -90,4 +89,4 @@ class Production:
 
         graph_matcher = iso.GraphMatcher(graph, self.left_side,
                               node_match=lambda u, v: u[LABEL] == v[LABEL])
-        return {v: k for k, v in graph_matcher.mapping.items()} if list(graph_matcher.subgraph_isomorphisms_iter())[0] else None
+        return {v: k for k, v in graph_matcher.mapping.items()} if graph_matcher.subgraph_is_isomorphic() else None
