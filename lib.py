@@ -6,10 +6,12 @@ from typing import Callable
 import networkx as nx
 import itertools as it
 import matplotlib.pyplot as plt
+import random
 
 LABEL = "label"
 NODE_GENERATOR = it.count()
 LEVEL_OFFSET = 1.5
+OVERLAPPING_OFFSET = 0.03
 
 def next_nodes(count=1):
     """Global generator for node numbers to provide uniqueness"""
@@ -29,13 +31,25 @@ def visualize_graph(g: Graph, level: int = None) -> None:
     if level != None:
         this_level_nodes = [node for node, attr in g.nodes.items() if attr["level"]==level]
         g = g.subgraph(this_level_nodes)
-    pos = {n: (a["x"]+LEVEL_OFFSET*a["level"], a["y"]) for n, a in g.nodes.items()}
+    list_of_coords = {n: (a["x"]+LEVEL_OFFSET*a["level"], a["y"]) for n, a in g.nodes.items()}
+    list_of_coords = {n: __move_if_overlapping(list_of_coords, coords) for n, coords in list_of_coords.items()}
     labels = {n: a[LABEL] for n, a in g.nodes.items()}
-    nx.draw(g, pos, node_size=100, node_color="y")
-    nx.draw_networkx_labels(g, pos, labels, font_color='k', font_size=8)
+    nx.draw(g, list_of_coords, node_size=100, node_color="y")
+    nx.draw_networkx_labels(g, list_of_coords, labels, font_color='k', font_size=8)
     plt.axis('scaled')
     plt.show()
 
+def __move_if_overlapping(list_of_coords, coords):
+    x, y = coords
+    how_many_matches = 0
+    for _, (x_i, y_i) in list_of_coords.items():
+        if  x == x_i and y == y_i:
+            how_many_matches+=1
+    if how_many_matches > 1:
+        return (x+random.random()*OVERLAPPING_OFFSET, y)
+    else:
+        return (x, y)
+        
 
 @dataclass
 class Production:
