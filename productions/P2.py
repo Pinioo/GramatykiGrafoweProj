@@ -82,4 +82,4 @@ def production_modification(graph: Graph, mapping: dict) -> Graph:
   # add edges between previous level nodes and new nodes
   graph.add_edges_from([(mapping[IL], I1), (mapping[IL], I2)])
 
-P3 = Production(production_left_side(), production_modification)
+P2 = Production(production_left_side(), production_modification)
