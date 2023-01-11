@@ -52,7 +52,7 @@ class Production:
 
     left_side: Graph
     modification: Callable[[Graph, dict], None]
-    left_side_pos_constraints: Callable[[Graph], bool]
+    left_side_pos_constraints: Callable[[Graph, dict], bool]
 
     # Return graph after
     def perform_modification(self, graph: Graph, in_place: bool = False, level: int = None) -> Graph:
@@ -74,7 +74,11 @@ class Production:
     def get_mapping_if_applicable(self, graph: Graph):
         """Returns a mapping {left_side_node, input_graph_node} for isomorphism if found."""
 
-        # TODO: Add a way to find same position nodes
         graph_matcher = iso.GraphMatcher(graph, self.left_side,
                               node_match=lambda u, v: u[LABEL] == v[LABEL])
-        return {v: k for k, v in graph_matcher.mapping.items()} if graph_matcher.subgraph_is_isomorphic() else None
+        for mapping in graph_matcher.subgraph_isomorphisms_iter():
+            print(mapping)
+            mapping_res = {v: k for k, v in graph_matcher.mapping.items()}
+            if self.left_side_pos_constraints(graph, mapping_res):
+                return mapping_res
+        return None

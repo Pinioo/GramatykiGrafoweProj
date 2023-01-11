@@ -2,7 +2,7 @@ from lib import Production, attr, next_nodes
 from utils.graph_utils import __get_node_pos
 from networkx import Graph
 
-E0, E1, E2, E3, E4, E5, I1, I2, I3, I4, I5, I6 = next_nodes(12)
+E0, E1, E2, E3, E4, E5, I1, I2, I3, I4, I5 = next_nodes(11)
 
 #### PRODUCTION DEFINITION
 
@@ -43,24 +43,26 @@ def production_left_side():
     left = Graph()
     left.add_nodes_from([(E0, attr("E")),
         (I1, attr("I")), (I2, attr("I")), (I3, attr("I")), (I4, attr("I")), (E1, attr("E")), (E2, attr("E")), (E3, attr("E")),
-        (I5, attr("I")), (I6, attr("I")), (E4, attr("E")), (E5, attr("E"))])
+        (I5, attr("I")), (E4, attr("E")), (E5, attr("E"))])
     left.add_edges_from([(E0, I1), (I1, I2), (I1, I3), (I2, E1), (I2, E2), (I3, E2), (I3, E3),
-                         (E0, I4), (I4, I5), (I5, E4), (I5, E5), (E4, E5)])
+                         (E0, I4), (I4, I5), (I5, E4), (I5, E5), (E4, E5), (E1, E2), (E2, E3)])
 
     return left
 
-def left_side_pos_constraints(graph: Graph) -> bool:
-    E1_pos = __get_node_pos(graph, E1)
-    E2_pos = __get_node_pos(graph, E2)
-    E3_pos = __get_node_pos(graph, E3)
-    E4_pos = __get_node_pos(graph, E4)
-    E5_pos = __get_node_pos(graph, E5)
+
+def left_side_pos_constraints(graph: Graph, mapping: dict) -> bool:
+    E1_pos = __get_node_pos(graph, mapping[E1])
+    E2_pos = __get_node_pos(graph, mapping[E2])
+    E3_pos = __get_node_pos(graph, mapping[E3])
+    E4_pos = __get_node_pos(graph, mapping[E4])
+    E5_pos = __get_node_pos(graph, mapping[E5])
     return E1_pos == E4_pos and E3_pos == E5_pos and E2_pos == ((E1_pos[0] + E3_pos[0])/2, (E1_pos[1] + E3_pos[1])/2)
+
 
 def production_modification(graph: Graph, mapping: dict):
   # Remove nodes we don't need
-  graph.remove_nodes_from([E4, E5])
+  graph.remove_nodes_from([mapping[E4], mapping[E5]])
   # Connect I5 to nodes at same posisions as deleted nodes
-  graph.add_edges_from([(I5, E1), (I5, E3)])
+  graph.add_edges_from([(mapping[I5], mapping[E1]), (mapping[I5], mapping[E3])])
 
 P13 = Production(production_left_side(), production_modification, left_side_pos_constraints)
