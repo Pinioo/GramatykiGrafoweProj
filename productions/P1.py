@@ -3,7 +3,7 @@ from networkx import Graph
 
 #             el
 #          E--|--E
-# el  =>   |\ | /|
+# El  =>   |\ | /|
 #          |  I  |
 #          |/   \|
 #          E-----E

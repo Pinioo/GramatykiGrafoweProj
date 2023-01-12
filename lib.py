@@ -50,6 +50,8 @@ def __move_if_overlapping(list_of_coords, coords):
     else:
         return (x, y)
         
+class NoIsomorphicSubgraphException(Exception):
+    pass
 
 @dataclass
 class Production:
@@ -78,7 +80,7 @@ class Production:
             graph_to_search = graph
         mapping = self.get_mapping_if_applicable(graph_to_search)
         if mapping is None:
-            raise Exception("No isomorphic subgraph has been found")
+            raise NoIsomorphicSubgraphException
         if not in_place:
             graph = graph.copy()
         self.modification(graph, mapping)
