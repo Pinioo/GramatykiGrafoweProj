@@ -15,7 +15,7 @@ def production_left_side():
     left.add_nodes_from([(EL, attr("El"))])
     return left
 
-def production_modification(graph: Graph, mapping: dict) -> Graph:
+def production_modification(graph: Graph, mapping: dict):
     level = graph.nodes[mapping[EL]]["level"]+1
     graph.nodes[mapping[EL]][LABEL] = "el"
     E1, E2, E3, E4, I = next_nodes(5)

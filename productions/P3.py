@@ -1,4 +1,5 @@
 from lib import Production, attr, LABEL, next_nodes
+from utils.graph_utils import __get_node_pos
 from networkx import Graph
 
 EL1, EL2, EL3, EL4, IL = next_nodes(5)
@@ -6,9 +7,6 @@ EL1, EL2, EL3, EL4, IL = next_nodes(5)
 # HELPERS
 def __add_subgraph_edges(graph, e1, e2, e3, e4, i):
   graph.add_edges_from([(e1, e2), (e2, e3), (e3, e4), (e4, e1), (e1, i), (e2, i), (e3, i), (e4, i)])
-
-def __get_node_pos(graph, node_id):
-  return graph.nodes[node_id]["x"], graph.nodes[node_id]["y"]
 
 def __get_center_of_four(graph, n1, n2, n3, n4):
   x1, y1 = __get_node_pos(graph, n1)
@@ -39,7 +37,7 @@ def production_left_side():
 
     return left
 
-def production_modification(graph: Graph, mapping: dict) -> Graph:
+def production_modification(graph: Graph, mapping: dict):
   E1, E2, E3, E4, E5, E6, E7, E8, E9 = next_nodes(9)
   I1, I2, I3, I4 = next_nodes(4)
   # calculate the level of the nodes
