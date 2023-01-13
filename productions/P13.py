@@ -60,9 +60,12 @@ def left_side_pos_constraints(graph: Graph, mapping: dict) -> bool:
 
 
 def production_modification(graph: Graph, mapping: dict):
-  # Remove nodes we don't need
-  graph.remove_nodes_from([mapping[E4], mapping[E5]])
-  # Connect I5 to nodes at same posisions as deleted nodes
-  graph.add_edges_from([(mapping[I5], mapping[E1]), (mapping[I5], mapping[E3])])
+    # Reconnect neighbours of nodes we are about to delete
+    for neigh_of_E4 in graph.neighbors(mapping[E4]):
+        graph.add_edges_from([(mapping[E1], neigh_of_E4)])
+    for neigh_of_E5 in graph.neighbors(mapping[E5]):
+        graph.add_edges_from([(mapping[E3], neigh_of_E5)])
+    # Remove nodes we don't need
+    graph.remove_nodes_from([mapping[E4], mapping[E5]])
 
 P13 = Production(production_left_side(), production_modification, left_side_pos_constraints)
