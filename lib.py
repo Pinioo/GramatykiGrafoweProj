@@ -93,8 +93,7 @@ class Production:
         graph_matcher = iso.GraphMatcher(graph, self.left_side,
                               node_match=lambda u, v: u[LABEL] == v[LABEL])
         for mapping in graph_matcher.subgraph_isomorphisms_iter():
-            print(mapping)
-            mapping_res = {v: k for k, v in graph_matcher.mapping.items()}
+            mapping_res = {v: k for k, v in mapping.items()}
             if self.left_side_pos_constraints is None:
                 return mapping_res
             elif self.left_side_pos_constraints(graph, mapping_res):
