@@ -44,16 +44,19 @@ def production_left_side():
 
 def production_modification(graph: Graph, mapping: dict) -> Graph:
     # get positions of left site nodes
+    x1, y1 = __get_node_pos(graph, mapping[E1])
     x2, y2 = __get_node_pos(graph, mapping[E2])
     x3, y3 = __get_node_pos(graph, mapping[E3])
     x4, y4 = __get_node_pos(graph, mapping[E4])
     x5, y5 = __get_node_pos(graph, mapping[E5])
 
     if x2 == x4 and y2 == y4 and x3 == x5 and y3 == y5:
-        graph.remove_nodes_from([mapping[E4], mapping[E5]])
-        graph.remove_edges_from([(mapping[E1], mapping[E4]), (mapping[E4], mapping[I5]), (mapping[E4], mapping[E5]),
-                                 (mapping[E4], mapping[I6])])
-        graph.add_edges_from([(mapping[I5], mapping[E2]), (mapping[E2], mapping[I6]), (mapping[E3], mapping[I6])])
+        if (x3+x1)/2 == x2 and (y3+y1)/2 == y2:
+            if (x5+x1)/2 == x4 and (y5+y1)/2 == y4:
+                graph.remove_nodes_from([mapping[E4], mapping[E5]])
+                graph.remove_edges_from([(mapping[E1], mapping[E4]), (mapping[E4], mapping[I5]), (mapping[E4], mapping[E5]),
+                                        (mapping[E4], mapping[I6])])
+                graph.add_edges_from([(mapping[I5], mapping[E2]), (mapping[E2], mapping[I6]), (mapping[E3], mapping[I6])])
 
 
 P10 = Production(production_left_side(), production_modification)
