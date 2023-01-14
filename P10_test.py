@@ -25,8 +25,6 @@ if __name__ == "__main__":
          (E5, attr("E", -2, -3))])
     graph.add_edges_from([(E0, I1), (I1, I2), (I1, I3), (I2, E1), (I2, E2), (I3, E2), (E2, E3), (E2, E1), (I3, E3),
                           (E0, I4), (I4, I5), (I4, I6), (I5, E1), (I5, E4), (E4, E5), (E4, I6), (E1, E4), (E5, I6)])
-    print(len(graph.nodes))
     visualize_graph(graph)
     g10 = P10.perform_modification(graph, level=0)
-    print(len(g10.nodes))
     visualize_graph(g10)
