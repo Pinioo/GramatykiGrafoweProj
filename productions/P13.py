@@ -68,4 +68,5 @@ def production_modification(graph: Graph, mapping: dict):
     # Remove nodes we don't need
     graph.remove_nodes_from([mapping[E4], mapping[E5]])
 
+
 P13 = Production(production_left_side(), production_modification, left_side_pos_constraints)

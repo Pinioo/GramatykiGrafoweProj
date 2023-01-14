@@ -42,7 +42,7 @@ def production_left_side():
     return left
 
 
-def production_modification(graph: Graph, mapping: dict) -> Graph:
+def production_modification(graph: Graph, mapping: dict):
     # get positions of left site nodes
     x2, y2 = __get_node_pos(graph, mapping[E2])
     x3, y3 = __get_node_pos(graph, mapping[E3])
@@ -56,4 +56,15 @@ def production_modification(graph: Graph, mapping: dict) -> Graph:
         graph.add_edges_from([(mapping[I5], mapping[E2]), (mapping[E2], mapping[I6]), (mapping[E3], mapping[I6])])
 
 
-P10 = Production(production_left_side(), production_modification)
+def left_side_pos_constraints(graph: Graph, mapping: dict):
+    e1_pos = __get_node_pos(graph, mapping[E1])
+    e2_pos = __get_node_pos(graph, mapping[E2])
+    e3_pos = __get_node_pos(graph, mapping[E3])
+    e4_pos = __get_node_pos(graph, mapping[E4])
+    e5_pos = __get_node_pos(graph, mapping[E5])
+    return e2_pos == e4_pos and e3_pos == e5_pos and e2_pos == (
+        (e1_pos[0] + e3_pos[0]) / 2, (e1_pos[1] + e3_pos[1]) / 2) and e4_pos == (
+        (e1_pos[0] + e5_pos[0]) / 2, (e1_pos[1] + e5_pos[1]) / 2)
+
+
+P10 = Production(production_left_side(), production_modification, left_side_pos_constraints)
