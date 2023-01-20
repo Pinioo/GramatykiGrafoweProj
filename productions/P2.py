@@ -37,7 +37,7 @@ def production_left_side():
 
     return left
 
-def production_modification(graph: Graph, mapping: dict) -> Graph:
+def production_modification(graph: Graph, mapping: dict):
   E1, E2, E3, E4, E5, E6 = next_nodes(6)
   I1, I2 = next_nodes(2)
   # calculate the level of the nodes
@@ -83,3 +83,21 @@ def production_modification(graph: Graph, mapping: dict) -> Graph:
   graph.add_edges_from([(mapping[IL], I1), (mapping[IL], I2)])
 
 P2 = Production(production_left_side(), production_modification)
+
+
+def vert_constraints(graph: Graph, mapping: dict) -> bool:
+  EL1_pos = __get_node_pos(graph, mapping[EL1])
+  EL2_pos = __get_node_pos(graph, mapping[EL2])
+  EL3_pos = __get_node_pos(graph, mapping[EL3])
+  EL4_pos = __get_node_pos(graph, mapping[EL4])
+  return EL1_pos[0] == EL2_pos[0] and EL3_pos[0] == EL4_pos[0]
+P2_vert = Production(production_left_side(), production_modification, vert_constraints)
+
+
+def horiz_constraints(graph: Graph, mapping: dict) -> bool:
+  EL1_pos = __get_node_pos(graph, mapping[EL1])
+  EL2_pos = __get_node_pos(graph, mapping[EL2])
+  EL3_pos = __get_node_pos(graph, mapping[EL3])
+  EL4_pos = __get_node_pos(graph, mapping[EL4])
+  return EL1_pos[1] == EL2_pos[1] and EL3_pos[1] == EL4_pos[1]
+P2_horiz = Production(production_left_side(), production_modification, horiz_constraints)
